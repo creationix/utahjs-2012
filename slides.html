@@ -53,8 +53,12 @@ article.bigger q::after {
   font-size: 120px;
 }
 
+article .snippet .toolbar {
+  display:none;
+}
+
       .slides.template-default > article.biglogo {
-        background: black url(images/stand-firm.jpg) no-repeat center center !important;
+        background: black url(images/stand-firm.png) no-repeat center center !important;
         background-size: cover;
         text-align: center;
       }
@@ -188,24 +192,7 @@ article.bigger q::after {
 
       <article>
         <p>What if node was modeled after CGI and used blocking I/O?</p>
-        <pre>
-// Assume this is an HTTP request and some CGI variables are already set
-if (REQUEST_METHOD === "GET" &amp;&amp; PATH_INFO === "/") {
-
-  // Load the HTML from the disk, wait for it to finish.
-  var html = readfile("index.html");
-
-  // Return the entire HTTP response in an object
-  return {
-    code: 200,
-    headers: {
-      "Content-Type": "text/html",
-      "Content-Length": html.length
-    },
-    content: html
-  };
-}
-</pre>
+        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/code/cgi.js" defer="defer"></script>
       </article>
 
       <article>
@@ -236,6 +223,9 @@ if (REQUEST_METHOD === "GET" &amp;&amp; PATH_INFO === "/") {
           <li>What about parallel work? (reading from disk while querying the database)</li>
         </ul>
       </article>
+<article>
+<script src="http://snippets.c9.io/github.com/nodebits/linux-joystick/read-loop.js?linestart=3&amp;lineend=15" defer="defer"></script>
+</article>
 
       <article>
         <p>What node code really looks like</p>
