@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+  <head>
+    <title>How Firm is Your Node.JS Foundation?</title>
+
+    <meta charset='utf-8'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic|Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic|Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+
+    <script
+      src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+  </head>
+
+  <style>
+    /* Your individual styles here, or just use inline styles if that’s
+       what you want. */
+
+
+article.bigger p,
+article.bigger ul {
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0;
+}
+article.bigger table {
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0;
+}
+article.bigger pre {
+  font-size: 30px;
+  line-height: 40px;
+  letter-spacing: 0;
+}
+article.bigger q {
+  font-size: 80px;
+  line-height: 96px;
+}
+article.bigger q::before,
+article.bigger q::after {
+  font-size: 120px;
+}
+
+      .slides.template-default > article.biglogo {
+        background: black url(images/stand-firm.jpg) no-repeat center center !important;
+        background-size: cover;
+        text-align: center;
+      }
+      .slides.template-default > article.biglogo h1 {
+        font-size: 90px;
+        line-height: 110px;
+        color:white;
+        opacity:0;
+        transition: opacity 2s;
+        -moz-transition: opacity 2s;
+        -webkit-transition: opacity 2s;
+        -o-transition: opacity 2s;
+      }
+      .slides.template-default > article.biglogo h1:hover {
+        opacity:1;
+      }
+      .slides.template-default > article:not(.nobackground):not(.biglogo) {
+        background-image: url(images/node-logo-small.png) !important;
+        background-position: 685px 625px !important;
+      }
+      .slides.template-default > article h1 {
+        font-family: Ubuntu, sans-serif;
+        font-weight: bold;
+      }
+      .slides.template-default > article p {
+        font-family: Ubuntu, sans-serif;
+        font-weight: normal;
+      }
+      .slides.template-default > article code {
+        font-family: Ubuntu Mono, monospace;
+        font-weight: normal;
+      }
+      .slides.template-default > article pre {
+        font-family: Ubuntu Mono, monospace;
+        font-weight: normal;
+      }
+
+
+  </style>
+
+  <body style='display: none'>
+
+    <section class='slides layout-regular template-default'>
+
+      <!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+
+      <article class="biglogo">
+        <h1 style="margin-top:100px;">How Firm is Your<br/>
+        <img src="images/node-logo.png" alt="node.js"/><br/>
+        Foundation?</h1>
+      </article>
+
+      <article>
+        <h1>
+          How Firm is Your
+          <br>
+          Node.JS Foundation?
+        </h1>
+        <p>
+          Tim Caswell
+          <br>
+          June 1, 2012
+        </p>
+      </article>
+      <article class="bigger">
+        <h3>The Core Tools</h3>
+        <ul>
+          <li><strong>State</strong>: Objects and Closures</li>
+          <li><strong>Control</strong>: Callbacks and Streams</li>
+          <li><strong>Organization</strong>: Interface Oriented Modules</li>
+          <li><strong>I/O</strong>: Non-Blocking
+            <ul>
+              <li>Network (UDP, TCP, HTTP)</li>
+              <li>Disk</li>
+            </ul>
+          </li>
+        </ul>
+      </article>
+      <article>
+        <h3>I/O Latency Compared</h3>
+        <table>
+          <tr>
+            <th>Access</th>
+            <th>CPU Cycles</th>
+            <th>Analogy</th>
+            <th>Time</th>
+          </tr>
+          <tr>
+            <td>L1</td>
+            <td>3</td>
+            <td><small>Grab a piece of paper from your desk</small></td>
+            <td>3 seconds</td>
+          </tr>
+          <tr>
+            <td>L2</td>
+            <td>14</td>
+            <td><small>Pick up a book from a nearby shelf</small></td>
+            <td>14 seconds</td>
+          </tr>
+          <tr>
+            <td>RAM</td>
+            <td>250</td>
+            <td><small>Take a walk down the hall to buy a Twix bar</small></td>
+            <td>4 minutes</td>
+          </tr>
+          <tr>
+            <td>DISK</td>
+            <td class="red">41,000,000</td>
+            <td><small>Leave the building and roam the earth</small></td>
+            <td class="red">15 months</td>
+          </tr>
+          <tr>
+            <td>NETWORK</td>
+            <td class="red">240,000,000</td>
+            <td><small>Invest in Facebook, wait for them to IPO</small></td>
+            <td class="red">8 years</td>
+          </tr>
+        </table>
+        <div class='source'>
+          Source: <a href="http://duartes.org/gustavo/blog/post/what-your-computer-does-while-you-wait">Gustavo Duarte</a>
+        </div>
+      </article>
+
+      <article>
+        <h3>Waiting Rooms - An Analogy</h3>
+        <p>
+          <img style='height: 500px' src='images/waiting-rooms.jpg'>
+        </p>
+      </article>
+
+      <article>
+        <p>What if node was modeled after CGI and used blocking I/O?</p>
+        <pre>
+// Assume this is an HTTP request and some CGI variables are already set
+if (REQUEST_METHOD === "GET" &amp;&amp; PATH_INFO === "/") {
+
+  // Load the HTML from the disk, wait for it to finish.
+  var html = readfile("index.html");
+
+  // Return the entire HTTP response in an object
+  return {
+    code: 200,
+    headers: {
+      "Content-Type": "text/html",
+      "Content-Length": html.length
+    },
+    content: html
+  };
+}
+</pre>
+      </article>
+
+      <article>
+        <h3>Pros to blocking CGi style</h3>
+        <ul>
+          <li><strong>Simple</strong>: You can assume it's an HTTP request.</li>
+          <li><strong>Clear</strong>: Write tasks using simple, linear logic.</li>
+          <li><strong>Familiarity</strong>: It's how 99% of the web frameworks in the world work.  No need to learn something new.</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Cons to blocking CGI style</h3>
+        <ul>
+          <li>It's <strong>not</strong> flexible at all.
+            <ul>
+              <li>How do I set the HTTP port?</li>
+              <li>What interface does it bind to?</li>
+              <li>What if I want two HTTP servers in the same process?</li>
+            </ul>
+          </li>
+          <li>How do I persist data between requests?</li>
+          <li>What about parallel or slow clients?
+            <ul>
+              <li>They would either have to be served one at a time. (slow)</li>
+              <li>Or spawn a thread or process for <em>every</em> client. (expensive)</li>
+            </ul>
+          </li>
+          <li>What about parallel work? (reading from disk while querying the database)</li>
+        </ul>
+      </article>
+
+      <article>
+        <p>What node code really looks like</p>
+        <pre>
+var http = require('http');
+var fs = require('fs');
+
+// Create an HTTP server in this process.
+var server = http.createServer(onRequest);
+server.listen(8080, onListen);
+
+function onListen() {
+  console.log("HTTP server listening at http://localhost:8080/");
+}
+
+function onRequest(req, res) {
+  // Handle request
+}
+</pre>
+      </article>
+
+      <article>
+        <p>What node code really looks like (cont.)</p>
+        <pre>
+function onRequest(req, res) {
+  if (req.method === "GET" &amp;&amp; req.url === "/") {
+    fs.readFile("index.html", function (err, html) {
+      if (err) {
+        res.writeHead(500, { "Content-Type": "text/plain",
+                             "Content-Length": err.stack.length });
+        res.end(stack.length);
+      }
+      else {
+        res.writeHead(200, { "Content-Type": "text/html",
+                             "Content-Length": err.stack.length });
+        res.end(html);
+      }
+    });
+  }
+}
+</pre>
+      </article>
+
+      <article>
+        <h3>
+          State - Or Remembering Who You Are
+        </h3>
+        <p>
+          In any node program there is the concept of state.  It's useful for remembering where you were when an event comes in.
+        </p>
+        <p>JavaScript has objects that are used for storing internal state in named properties accessible via <code>this</code>.</p>
+        <pre>
+var obj = {};       // Create a new object
+obj.name = "Tim";   // Give it a name
+obj.race = "human"; // It is human right?
+obj.hitPoints = 42; // 42 has a nice ring to it.
+obj.getDescription = function () {
+  return this.name + " the " + this.race + " has " + this.hitPoints + " hitpoints.";
+};
+
+var description = obj.getDescription();
+</pre>
+
+      </article>
+      <article>
+        <p>Here is the same example using the common constructor + prototype method.</p>
+        <pre>
+// A constructor is simply a function that's meant to be called with `new`
+function Person(name, race, hitPoints) {
+  this.name = name;
+  this.race = race;
+  this.hitPoints = hitPoints;
+}
+// Add a shared method to the constructor's object prototype
+Person.prototype.getDescription = function () {
+  return this.name + " the " + this.race + " has " + this.hitPoints + " hitpoints.";
+}
+
+// Create a new instance of the Person class.
+var obj = new Person("Tim", "human", 42);
+// Call the `getDescription` method of this class instance.
+var description = obj.getDescription();
+</pre>
+      </article>
+      <article>
+        <p>The problem is registering a callback usually doesn't preserve the intended <code>this</code> value.</p>
+        <pre>
+function Person(name) {
+  this.name = name;
+}
+Person.prototype.greet = function () {
+console.log(this.name + " says hi!");
+};
+var tim = new Person("Tim");
+
+// Tell tim to greet us now
+tim.greet(); // -> <strong>Tim</strong> says hi!
+
+// Tell tim to greet us in 500ms
+setTimeout(tim.greet, 500); // -> <strong>undefined</strong> says hi!
+</pre>
+        <p>Why did this not work?</p>
+      </article>
+
+      <article>
+        <h3>
+          Slide with bullet points and a longer title, just because we
+          can make it longer
+        </h3>
+        <ul>
+          <li>
+            Use this template to create your presentation
+          </li>
+          <li>
+            Use the provided color palette, box and arrow graphics, and
+            chart styles
+          </li>
+          <li>
+            Instructions are provided to assist you in using this
+            presentation template effectively
+          </li>
+          <li>
+            At all times strive to maintain Google's corporate look and feel
+          </li>
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+          Slide with bullet points that builds
+        </h3>
+        <ul class="build">
+          <li>
+            This is an example of a list
+          </li>
+          <li>
+            The list items fade in
+          </li>
+          <li>
+            Last one!
+          </li>
+        </ul>
+
+        <div class="build">
+          <p>Any element with child nodes can build.</p>
+          <p>It doesn't have to be a list.</p>
+        </div>
+      </article>
+
+      <article class='smaller'>
+        <h3>
+          Slide with bullet points (small font)
+        </h3>
+        <ul>
+          <li>
+            Use this template to create your presentation
+          <li>
+            Use the provided color palette, box and arrow graphics, and
+            chart styles
+          <li>
+            Instructions are provided to assist you in using this
+            presentation template effectively
+          <li>
+            At all times strive to maintain Google's corporate look and feel
+        </ul>
+      </article>
+
+      <article>
+        <h3>
+          Slide with a table
+        </h3>
+
+        <table>
+          <tr>
+            <th>
+              Name
+            <th>
+              Occupation
+          <tr>
+            <td>
+              Luke Mahé
+            <td>
+              V.P. of Keepin’ It Real
+          <tr>
+            <td>
+              Marcin Wichary
+            <td>
+              The Michael Bay of Doodles
+        </table>
+      </article>
+
+      <article class='smaller'>
+        <h3>
+          Slide with a table (smaller text)
+        </h3>
+
+        <table>
+          <tr>
+            <th>
+              Name
+            <th>
+              Occupation
+          <tr>
+            <td>
+              Luke Mahé
+            <td>
+              V.P. of Keepin’ It Real
+          <tr>
+            <td>
+              Marcin Wichary
+            <td>
+              The Michael Bay of Doodles
+        </table>
+      </article>
+
+      <article>
+        <h3>
+          Styles
+        </h3>
+        <ul>
+          <li>
+            <span class='red'>class="red"</span>
+          <li>
+            <span class='blue'>class="blue"</span>
+          <li>
+            <span class='green'>class="green"</span>
+          <li>
+            <span class='yellow'>class="yellow"</span>
+          <li>
+            <span class='black'>class="black"</span>
+          <li>
+            <span class='white'>class="white"</span>
+          <li>
+            <b>bold</b> and <i>italic</i>
+        </ul>
+      </article>
+
+      <article>
+        <h2>
+          Segue slide
+        </h2>
+      </article>
+
+      <article>
+        <h3>
+          Slide with an image
+        </h3>
+        <p>
+          <img style='height: 500px' src='images/example-graph.png'>
+        </p>
+        <div class='source'>
+          Source: Sergey Brin
+        </div>
+      </article>
+
+      <article>
+        <h3>
+          Slide with an image (centered)
+        </h3>
+        <p>
+          <img class='centered' style='height: 500px' src='images/example-graph.png'>
+        </p>
+        <div class='source'>
+          Source: Larry Page
+        </div>
+      </article>
+
+      <article class='fill'>
+        <h3>
+          Image filling the slide (with optional header)
+        </h3>
+        <p>
+          <img src='images/example-cat.jpg'>
+        </p>
+        <div class='source white'>
+          Source: Eric Schmidt
+        </div>
+      </article>
+
+      <article>
+        <h3>
+          This slide has some code
+        </h3>
+        <section>
+        <pre>
+&lt;script type='text/javascript'&gt;
+  // Say hello world until the user starts questioning
+  // the meaningfulness of their existence.
+  function helloWorld(world) {
+    for (var i = 42; --i &gt;= 0;) {
+      alert('Hello ' + String(world));
+    }
+  }
+&lt;/script&gt;
+&lt;style&gt;
+  p { color: pink }
+  b { color: blue }
+  u { color: 'umber' }
+&lt;/style&gt;
+</pre>
+        </section>
+      </article>
+
+      <article class='smaller'>
+        <h3>
+          This slide has some code (small font)
+        </h3>
+        <section>
+        <pre>
+&lt;script type='text/javascript'&gt;
+  // Say hello world until the user starts questioning
+  // the meaningfulness of their existence.
+  function helloWorld(world) {
+    for (var i = 42; --i &gt;= 0;) {
+      alert('Hello ' + String(world));
+    }
+  }
+&lt;/script&gt;
+&lt;style&gt;
+  p { color: pink }
+  b { color: blue }
+  u { color: 'umber' }
+&lt;/style&gt;
+</pre>
+        </section>
+      </article>
+
+      <article>
+        <q>
+          The best way to predict the future is to invent it.
+        </q>
+        <div class='author'>
+          Alan Kay
+        </div>
+      </article>
+
+      <article class='smaller'>
+        <q>
+          A distributed system is one in which the failure of a computer
+          you didn’t even know existed can render your own computer unusable.
+        </q>
+        <div class='author'>
+          Leslie Lamport
+        </div>
+      </article>
+
+      <article class='nobackground'>
+        <h3>
+          A slide with an embed + title
+        </h3>
+
+        <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
+      </article>
+
+      <article class='nobackground'>
+        <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
+      </article>
+
+      <article class='fill'>
+        <h3>
+          Full-slide embed with (optional) slide title on top
+        </h3>
+        <iframe src='http://www.google.com/doodle4google/history.html'></iframe>
+      </article>
+
+      <article>
+        <h3>
+          Thank you!
+        </h3>
+
+        <ul>
+          <li>
+            <a href='http://www.google.com'>google.com</a>
+        </ul>
+      </article>
+
+    </section>
+
+  </body>
+</html>
