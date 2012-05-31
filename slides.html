@@ -170,18 +170,7 @@
           In any node program there is the concept of state.  It's useful for remembering where you were when an event comes in.
         </p>
         <p>JavaScript has objects that are used for storing internal state in named properties accessible via <code>this</code>.</p>
-        <pre>
-var obj = {};       // Create a new object
-obj.name = "Tim";   // Give it a name
-obj.race = "human"; // It is human right?
-obj.hitPoints = 42; // 42 has a nice ring to it.
-obj.getDescription = function () {
-  return this.name + " the " + this.race + " has " + this.hitPoints + " hitpoints.";
-};
-
-var description = obj.getDescription();
-</pre>
-
+        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/object1.js" defer="defer"></script>
       </article>
       <article>
         <p>Here is the same example using the common constructor + prototype method.</p>
