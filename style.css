@@ -1,0 +1,81 @@
+article.bigger p,
+article.bigger ul {
+font-size: 40px;
+line-height: 48px;
+letter-spacing: 0;
+}
+article.bigger table {
+font-size: 40px;
+line-height: 48px;
+letter-spacing: 0;
+}
+article.bigger pre {
+font-size: 30px;
+line-height: 40px;
+letter-spacing: 0;
+}
+article.bigger q {
+font-size: 80px;
+line-height: 96px;
+}
+article.bigger q::before,
+article.bigger q::after {
+font-size: 120px;
+}
+
+article .snippet .toolbar {
+display:none;
+}
+article .snippet .filename {
+padding: 5px 5px;
+float: right;
+margin: -10px -10px 0 4px;
+border-radius: 0 0 0 3px;
+font-size: 12px;
+line-height: 1em;
+background-color:#777;
+color: #eee;
+text-decoration: none;
+}
+article .snippet .filename:hover {
+color: #fff;
+}
+
+.slides.template-default > article.biglogo {
+  background: black url(images/stand-firm.jpg) no-repeat center center !important;
+  background-size: cover;
+  text-align: center;
+}
+.slides.template-default > article.biglogo h1 {
+  font-size: 90px;
+  line-height: 110px;
+  color:white;
+  opacity:0;
+  transition: opacity 2s;
+  -moz-transition: opacity 2s;
+  -webkit-transition: opacity 2s;
+  -o-transition: opacity 2s;
+}
+.slides.template-default > article.biglogo h1:hover {
+  opacity:1;
+}
+.slides.template-default > article:not(.nobackground):not(.biglogo) {
+  background-image: url(images/node-logo-small.png) !important;
+  background-position: 685px 625px !important;
+}
+.slides.template-default > article h1 {
+  font-family: Ubuntu, sans-serif;
+  font-weight: bold;
+}
+.slides.template-default > article p {
+  font-family: Ubuntu, sans-serif;
+  font-weight: normal;
+}
+.slides.template-default > article code {
+  font-family: Ubuntu Mono, monospace;
+  font-weight: normal;
+}
+.slides.template-default > article pre {
+  font-family: Ubuntu Mono, monospace;
+  font-weight: normal;
+}
