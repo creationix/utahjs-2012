@@ -8,7 +8,6 @@ function Person(name, race, hitPoints) {
 Person.prototype.getDescription = function () {
   return this.name + " the " + this.race + " has " + this.hitPoints + " hitpoints.";
 }
-
 // Create a new instance of the Person class.
 var obj = new Person("Tim", "human", 42);
 // Call the `getDescription` method of this class instance.
