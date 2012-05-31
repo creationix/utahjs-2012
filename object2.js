@@ -12,4 +12,5 @@ Person.prototype.getDescription = function () {
 // Create a new instance of the Person class.
 var obj = new Person("Tim", "human", 42);
 // Call the `getDescription` method of this class instance.
-var description = obj.getDescription();
+console.log(obj.getDescription());
+// -> Tim the human has 42 hitpoints.
