@@ -6,20 +6,20 @@ var server = http.createServer(onRequest);
 server.listen(8080, onListen);
 
 function onListen() {
-  console.log("HTTP server listening at http://localhost:8080/");
+  console.log("HTTP server listening at http://creationix.com:8080/");
 }
 
 function onRequest(req, res) {
-  if (req.method === "GET" &amp;&amp; req.url === "/") {
+  if (req.method === "GET" && req.url === "/") {
     fs.readFile("index.html", function (err, html) {
       if (err) {
         res.writeHead(500, { "Content-Type": "text/plain",
                              "Content-Length": err.stack.length });
-        res.end(stack.length);
+        res.end(err.stack);
       }
       else {
         res.writeHead(200, { "Content-Type": "text/html",
-                             "Content-Length": err.stack.length });
+                             "Content-Length": html.length });
         res.end(html);
       }
     });
