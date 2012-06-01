@@ -1,0 +1,33 @@
+digraph finite_state_machine {
+  size="8.3,8"
+  rankdir = "LR"
+	node [fontname=Sans]
+
+  /* Execution Contexts */
+  node [shape=Mrecord, fillcolor=beige, style=filled];
+  top [label="<__proto__>[ Scope ]|<first>first|<second>second|<third>third"];
+  cl_second [label="<__proto__>[ Scope ]|<a>a='Hello'"];
+  cl_third [label="<__proto__>[ Scope ]|<b>b=42"];
+
+  /* Normal Objects */
+  node [shape = Mrecord, fillcolor=lightskyblue, style=filled];
+
+  /* Function Objects */
+  node [shape = Mrecord, fillcolor=orange, style=filled]
+  fn_first [label="<__proto__>[first(a)]|\{ return function... \}|<__scope__>[scope]"];
+  fn_second [label="<__proto__>[second(b)]|\{ return function... \}|<__scope__>[scope]"];
+  fn_third [label="<__proto__>[third(c)]|\{ return a + b + c \}|<__scope__>[scope]"];
+
+  /* References */
+  top:first -> fn_first:__proto__;
+  top:second -> fn_second:__proto__;
+  top:third -> fn_third:__proto__;
+  fn_first:__scope__ -> top;
+  fn_second:__scope__ -> cl_second;
+  fn_third:__scope__ -> cl_third;
+
+  /* Inheritance Chains */
+  edge [style=dashed]
+  cl_second -> top:__proto__;
+  cl_third -> cl_second:__proto__;
+}

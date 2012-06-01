@@ -1,0 +1,31 @@
+digraph finite_state_machine {
+  size="8.3,8"
+  rankdir = "LR"
+	node [fontname=Sans]
+
+  /* Execution Contexts */
+  node [shape=Mrecord, fillcolor=beige, style=filled];
+  top [label="<__proto__>[ Scope ]|<Greeter>Greeter|<bob>bob"];
+
+  /* Normal Objects */
+  node [shape = Mrecord, fillcolor=lightskyblue, style=filled];
+  ob_GreeterProto [label = "<__proto__>[ Object ]|<constructor>constructor|<greet>greet"];
+  ob_bob [label = "<__proto__>[ Object ]|<name>name='Bob'"];
+
+  /* Function Objects */
+  node [shape = Mrecord, fillcolor=orange, style=filled];
+  fn_Greeter [label="<__proto__>[ Greeter(name) ]|\{this.name = name\}|<prototype>prototype"];
+  fn_greet [label="<__proto__>[ Function ]|\{this.name + ' greets you!'\}"];
+
+  /* References */
+  top:Greeter -> fn_Greeter:__proto__;
+  top:bob -> ob_bob:__proto__;
+  fn_Greeter:prototype -> ob_GreeterProto:__proto__;
+  ob_GreeterProto:constructor -> fn_Greeter:__proto__;
+  ob_GreeterProto:greet -> fn_greet:__proto__;
+
+  /* Inheritance Chains */
+  edge [style=dashed]
+  ob_bob:__proto__ -> ob_GreeterProto:__proto__;
+
+}

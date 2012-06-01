@@ -50,19 +50,31 @@
         </p>
       </article>
       <article class="bigger">
-        <h3>The Core Tools</h3>
+        <h3>What is Node?</h3>
+        <p>Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.</p>
+      </article>
+
+      <article class="bigger">
+        <h3>Node Foundations</h3>
         <ul>
-          <li><strong>State</strong>: Objects and Closures</li>
-          <li><strong>Control</strong>: Callbacks and Streams</li>
-          <li><strong>Organization</strong>: Interface Oriented Modules</li>
           <li><strong>I/O</strong>: Non-Blocking
             <ul>
               <li>Network (UDP, TCP, HTTP)</li>
               <li>Disk</li>
             </ul>
           </li>
+          <li><strong>State</strong>: Objects and Closures</li>
+          <li><strong>Control</strong>: Callbacks, Events, and Streams</li>
+          <li><strong>Organization</strong>: Interface Oriented Modules</li>
         </ul>
       </article>
+
+      <article>
+        <h2>
+          I/O
+        </h2>
+      </article>
+
       <article>
         <h3>I/O Latency Compared</h3>
         <table>
@@ -117,7 +129,7 @@
 
       <article>
         <p>What if node was modeled after CGI and used blocking I/O?</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/cgi.js" defer="defer"></script>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/cgi.js" defer="defer"></script>
       </article>
 
       <article>
@@ -150,79 +162,109 @@
       </article>
 
       <article>
-        <p>What node code really looks like</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/node.js?linestart=1&amp;lineend=10" defer="defer"></script>
+        <h3>What node code really looks like</h3>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/node.js?linestart=5" defer="defer"></script>
       </article>
 
       <article>
-        <p>What node code really looks like (cont.)</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/node.js?linestart=12&amp;lineend=27" defer="defer"></script>
+        <h2>
+          State
+        </h2>
       </article>
 
+
       <article>
-        <h3>
-          State - Or Remembering Who You Are
-        </h3>
+        <h3>Basic Objects</h3>
         <p>
-          In any node program there is the concept of state.  It's useful for remembering where you were when an event comes in.
+          In any node program there is the concept of state. It's useful for
+          remembering where you were when an event comes in.
         </p>
-        <p>JavaScript has objects that are used for storing internal state in named properties accessible via <code>this</code>.</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/object1.js" defer="defer"></script>
+        <p>
+          JavaScript has objects that are used for storing internal state in
+          named properties accessible via <code>this</code>.
+        </p>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/bob-basic.js" defer="defer"></script>
       </article>
-      <article>
-        <p>Here is the same example using the common constructor + prototype method.</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/object2.js" defer="defer"></script>
-      </article>
-      <article>
-        <p>The problem is registering a callback usually doesn't preserve the intended <code>this</code> value.</p>
-        <script src="http://snippets.c9.io/github.com/creationix/utahjs-2012/object3.js" defer="defer"></script>
-        <p>Why did this not work?</p>
+
+      <article class="fill">
+        <h3>Basic Objects</h3>
+        <p><img src="bob-basic.dot.svg"></p>
       </article>
 
       <article>
-        <h3>
-          Slide with bullet points and a longer title, just because we
-          can make it longer
-        </h3>
+        <h3>Object Prototypes</h3>
+        <p>
+          If you have several objects that share behavior, but differ in state, use prototypes.
+        </p>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/bob-prototype.js" defer="defer"></script>
+      </article>
+
+      <article class="fill">
+        <h3>Object Prototypes</h3>
+        <p><img src="bob-prototype.dot.svg"></p>
+      </article>
+
+      <article>
+        <h3>Object Constructors</h3>
+        <p>
+          In addition to prototypes, you can use constructors that initialize your object's state.
+        </p>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/bob-constructor.js" defer="defer"></script>
+      </article>
+
+      <article class="fill">
+        <h3>Object Constructors</h3>
+        <p><img src="bob-constructor.dot.svg"></p>
+      </article>
+      
+      <article>
+        <h3>Closure Objects</h3>
+        <p>Contexts are also objects and can be used as such.  One main benefit of this technique is you don't have to mess with <code>this</code></p>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/bob-closure.js" defer="defer"></script>
+      </article>
+
+      <article class="fill">
+        <h3>Closure Objects</h3>
+        <p><img src="bob-closure.dot.svg"></p>
+      </article>
+
+      <article>
+        <h3>Nested Closures</h3>
+        <p>Nested closures give you amazing power and flexiblity to store data at arbitrary levels of globalness.</p>
+        <script src="http://snippets.c9.io/creationix.com/utahjs/nested-closures.js" defer="defer"></script>
+      </article>
+
+      <article class="fill">
+        <h3>Nested Closures</h3>
+        <p><img src="nested-closures.dot.svg"></p>
+      </article>
+      
+      <article>
+        <h2>
+          Control
+        </h2>
+      </article>
+      
+      <article>
+        <h3>Async Functions and Callbacks</h3>
         <ul>
-          <li>
-            Use this template to create your presentation
-          </li>
-          <li>
-            Use the provided color palette, box and arrow graphics, and
-            chart styles
-          </li>
-          <li>
-            Instructions are provided to assist you in using this
-            presentation template effectively
-          </li>
-          <li>
-            At all times strive to maintain Google's corporate look and feel
-          </li>
+          <li>Functions that are requests to get a single answer or do a single thing</li>
+          <li>Either finish with a value or with an error</li>
+          <li>Always finish eventually</li>
+          <li>Callback usually isn't called before the function returns</li>
         </ul>
       </article>
+      
+      <article>
+      </script>
 
       <article>
-        <h3>
-          Slide with bullet points that builds
-        </h3>
-        <ul class="build">
-          <li>
-            This is an example of a list
-          </li>
-          <li>
-            The list items fade in
-          </li>
-          <li>
-            Last one!
-          </li>
-        </ul>
-
-        <div class="build">
-          <p>Any element with child nodes can build.</p>
-          <p>It doesn't have to be a list.</p>
-        </div>
+        <h2>
+          Organization
+        </h2>
       </article>
+
+
 
       <article class='smaller'>
         <h3>
@@ -239,76 +281,6 @@
             presentation template effectively
           <li>
             At all times strive to maintain Google's corporate look and feel
-        </ul>
-      </article>
-
-      <article>
-        <h3>
-          Slide with a table
-        </h3>
-
-        <table>
-          <tr>
-            <th>
-              Name
-            <th>
-              Occupation
-          <tr>
-            <td>
-              Luke Mahé
-            <td>
-              V.P. of Keepin’ It Real
-          <tr>
-            <td>
-              Marcin Wichary
-            <td>
-              The Michael Bay of Doodles
-        </table>
-      </article>
-
-      <article class='smaller'>
-        <h3>
-          Slide with a table (smaller text)
-        </h3>
-
-        <table>
-          <tr>
-            <th>
-              Name
-            <th>
-              Occupation
-          <tr>
-            <td>
-              Luke Mahé
-            <td>
-              V.P. of Keepin’ It Real
-          <tr>
-            <td>
-              Marcin Wichary
-            <td>
-              The Michael Bay of Doodles
-        </table>
-      </article>
-
-      <article>
-        <h3>
-          Styles
-        </h3>
-        <ul>
-          <li>
-            <span class='red'>class="red"</span>
-          <li>
-            <span class='blue'>class="blue"</span>
-          <li>
-            <span class='green'>class="green"</span>
-          <li>
-            <span class='yellow'>class="yellow"</span>
-          <li>
-            <span class='black'>class="black"</span>
-          <li>
-            <span class='white'>class="white"</span>
-          <li>
-            <b>bold</b> and <i>italic</i>
         </ul>
       </article>
 
@@ -354,53 +326,6 @@
         </div>
       </article>
 
-      <article>
-        <h3>
-          This slide has some code
-        </h3>
-        <section>
-        <pre>
-&lt;script type='text/javascript'&gt;
-  // Say hello world until the user starts questioning
-  // the meaningfulness of their existence.
-  function helloWorld(world) {
-    for (var i = 42; --i &gt;= 0;) {
-      alert('Hello ' + String(world));
-    }
-  }
-&lt;/script&gt;
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-  u { color: 'umber' }
-&lt;/style&gt;
-</pre>
-        </section>
-      </article>
-
-      <article class='smaller'>
-        <h3>
-          This slide has some code (small font)
-        </h3>
-        <section>
-        <pre>
-&lt;script type='text/javascript'&gt;
-  // Say hello world until the user starts questioning
-  // the meaningfulness of their existence.
-  function helloWorld(world) {
-    for (var i = 42; --i &gt;= 0;) {
-      alert('Hello ' + String(world));
-    }
-  }
-&lt;/script&gt;
-&lt;style&gt;
-  p { color: pink }
-  b { color: blue }
-  u { color: 'umber' }
-&lt;/style&gt;
-</pre>
-        </section>
-      </article>
 
       <article>
         <q>

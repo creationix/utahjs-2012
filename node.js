@@ -12,16 +12,10 @@ function onListen() {
 function onRequest(req, res) {
   if (req.method === "GET" && req.url === "/") {
     fs.readFile("index.html", function (err, html) {
-      if (err) {
-        res.writeHead(500, { "Content-Type": "text/plain",
-                             "Content-Length": err.stack.length });
-        res.end(err.stack);
-      }
-      else {
-        res.writeHead(200, { "Content-Type": "text/html",
-                             "Content-Length": html.length });
-        res.end(html);
-      }
+      // TODO: handle possible error
+      res.writeHead(200, { "Content-Type": "text/html",
+                           "Content-Length": html.length });
+      res.end(html);
     });
   }
 }
